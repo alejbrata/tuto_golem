@@ -26,11 +26,25 @@ try {
             const data = JSON.parse(content);
 
             // Validation Schema
-            const requiredFields = ['id', 'title', 'lore', 'lesson', 'initialCode', 'validationCode', 'hints', 'solutionCode'];
-            const missing = requiredFields.filter(field => !data[field]);
+            const rootFields = ['id', 'es', 'en', 'validationCode', 'solutionCode'];
+            const langFields = ['title', 'lore', 'lesson', 'hints', 'initialCode'];
 
-            if (missing.length > 0) {
-                console.error(`❌ [${file}] Missing fields: ${missing.join(', ')}`);
+            const missingRoot = rootFields.filter(field => !data[field]);
+            let missingLang = [];
+
+            if (data.es) {
+                const missingEs = langFields.filter(field => !data.es[field]);
+                missingLang.push(...missingEs.map(f => `es.${f}`));
+            }
+            if (data.en) {
+                const missingEn = langFields.filter(field => !data.en[field]);
+                missingLang.push(...missingEn.map(f => `en.${f}`));
+            }
+
+            const allMissing = [...missingRoot, ...missingLang];
+
+            if (allMissing.length > 0) {
+                console.error(`❌ [${file}] Missing fields: ${allMissing.join(', ')}`);
                 hasError = true;
             } else {
                 console.log(`✅ [${file}] Validated successfully.`);
