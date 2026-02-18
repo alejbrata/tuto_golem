@@ -3,26 +3,36 @@ import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-python';
 import 'prismjs/themes/prism-tomorrow.css'; // Dark theme
 
-function CodeEditor({ code, onChange, runCode, isRunning }) {
+function CodeEditor({ code, onChange, runCode, isRunning, isSuccessPending, onContinue, text }) {
     return (
         <div className="flex flex-col h-full font-mono text-sm">
             <div className="flex justify-between items-center mb-0 bg-slate-800 p-2 rounded-t-lg border-b border-slate-700">
                 <span className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-2">
-                    Spell Editor
+                    {text?.editor_label || "SPELL EDITOR"}
                 </span>
-                <button
-                    onClick={runCode}
-                    disabled={isRunning}
-                    className={`
+
+                {isSuccessPending ? (
+                    <button
+                        onClick={onContinue}
+                        className="px-4 py-1.5 rounded text-sm font-bold transition-all bg-amber-500 hover:bg-amber-400 text-slate-900 shadow-lg shadow-amber-900/50 hover:shadow-amber-500/30 animate-pulse"
+                    >
+                        {text?.run_advance || ">> CONTINUE"}
+                    </button>
+                ) : (
+                    <button
+                        onClick={() => { console.log("Run button clicked"); runCode(); }}
+                        disabled={isRunning}
+                        className={`
             px-4 py-1.5 rounded text-sm font-bold transition-all
             ${isRunning
-                            ? 'bg-slate-600 text-slate-400 cursor-not-allowed'
-                            : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/50 hover:shadow-emerald-500/30'
-                        }
+                                ? 'bg-slate-600 text-slate-400 cursor-not-allowed'
+                                : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/50 hover:shadow-emerald-500/30'
+                            }
           `}
-                >
-                    {isRunning ? 'Transmuting...' : '▶ RUN'}
-                </button>
+                    >
+                        {isRunning ? (text?.transmuting || "Transmuting...") : (text?.run_code || "▶ RUN")}
+                    </button>
+                )}
             </div>
 
             <div className="flex-1 bg-slate-900 overflow-auto border border-slate-800 rounded-b-lg relative">

@@ -3,172 +3,154 @@ import { decodeDNA } from '../engine/golemGen';
 function Golem({ dna, stage = 0, className = "" }) {
     const { bodyType, coreType, eyeType, limbType, color } = decodeDNA(dna);
 
-    // -- STAGE LOGIC --
+    // -- VISUAL LOGIC --
+    // Stage 0: Dormant (Gray, Static)
+    // Stage 1: Awakened (Color, Pulse) -> "Gained Soul Spark"
+    // Stage 2: Empowered (Float, Glow) -> "Gained Levitation"
+    // Stage 3: Enlightened (Third Eye) -> "Gained Third Eye"
+
     const isAwakened = stage >= 1;
     const isEmpowered = stage >= 2;
 
-    // Colors based on stage
-    const coreFill = isAwakened ? color.hex : '#475569';
-    const eyeFill = isAwakened ? color.hex : '#000000';
-    const strokeColor = '#1e293b';
-    const bodyFill = '#334155';
+    // Colors
+    const primaryColor = isAwakened ? color.hex : '#475569'; // Slate-600 dormant
+    const coreFill = isAwakened ? primaryColor : '#334155';
+    const bodyFill = '#1e293b'; // Slate-800
+    const strokeColor = isAwakened ? '#94a3b8' : '#334155'; // Slate-400 vs Slate-700
 
-    // Styles
-    const glowStyle = isEmpowered ? { filter: `drop-shadow(0 0 8px ${color.hex})` } : {};
+    // Animations
     const floatClass = isEmpowered ? "animate-[bounce_3s_infinite]" : "";
     const pulseClass = isAwakened ? "animate-pulse" : "";
 
     // -- SVG PATHS --
     const BODIES = [
-        <path d="M60 60 L140 60 L160 100 L150 220 L120 260 L80 260 L50 220 L40 100 Z" />,
-        <path d="M100 50 L140 80 L160 150 L140 220 L100 250 L60 220 L40 150 L60 80 Z" />,
-        <path d="M50 50 L150 50 L130 150 L150 250 L50 250 L70 150 Z" />
-    ];
-
-    const LIMBS = [
-        <g stroke={strokeColor} strokeWidth="6">
-            <line x1="40" y1="100" x2="20" y2="180" />
-            <line x1="160" y1="100" x2="180" y2="180" />
-            <circle cx="20" cy="180" r="8" fill={bodyFill} />
-            <circle cx="180" cy="180" r="8" fill={bodyFill} />
-        </g>,
-        <g fill={bodyFill} stroke={strokeColor}>
-            <path d="M20 140 L30 160 L20 180 L10 160 Z" className={isEmpowered ? "animate-[spin_4s_linear_infinite]" : ""} />
-            <path d="M180 140 L190 160 L180 180 L170 160 Z" className={isEmpowered ? "animate-[spin_4s_linear_infinite_reverse]" : ""} />
-        </g>
-    ];
-
-    const EYES = [
-        <rect x="80" y="80" width="40" height="10" fill={isAwakened ? color.hex : '#1e1e1e'} />,
-        <g fill={isAwakened ? color.hex : '#1e1e1e'}>
-            <circle cx="85" cy="85" r="6" />
-            <circle cx="115" cy="85" r="6" />
-        </g>,
-        <path d="M70 80 L100 90 L130 80 L100 75 Z" fill={isAwakened ? color.hex : '#1e1e1e'} />
-    ];
-
-    const CORES = [
-        <circle cx="100" cy="150" r="20" stroke={coreFill} strokeWidth="4" fill="none" className={isAwakened ? "animate-[spin_10s_linear_infinite]" : ""} />,
-        <rect x="85" y="135" width="30" height="30" transform="rotate(45 100 150)" stroke={coreFill} strokeWidth="4" fill="none" />,
-        <g stroke={coreFill} strokeWidth="3">
-            <line x1="80" y1="140" x2="120" y2="140" />
-            <line x1="80" y1="150" x2="120" y2="150" />
-            <line x1="80" y1="160" x2="120" y2="160" />
-        </g>
+        <path d="M60 60 L140 60 L160 100 L150 220 L120 260 L80 260 L50 220 L40 100 Z" />, // Angular
+        <path d="M100 50 L140 80 L160 150 L140 220 L100 250 L60 220 L40 150 L60 80 Z" />, // Hexagonal
+        <path d="M50 50 L150 50 L130 150 L150 250 L50 250 L70 150 Z" /> // Trapezoid
     ];
 
     return (
         <div className={`relative ${className} ${floatClass}`}>
-            {isEmpowered && (
+
+            {/* 0. AURA (Stage 2+) */}
+            {stage >= 2 && (
                 <div
                     className="absolute inset-0 rounded-full blur-2xl opacity-40 animate-pulse"
-                    style={{ background: `radial-gradient(circle, ${color.hex} 0%, transparent 70%)` }}
+                    style={{ background: `radial-gradient(circle, ${primaryColor} 0%, transparent 70%)` }}
                 ></div>
             )}
 
-            <svg viewBox="0 0 200 300" className="w-full h-full drop-shadow-xl relative z-10">
-                {/* BACK LAYER */}
-                {/* 7. ENERGY CAPE (Stage 7+) */}
-                {stage >= 7 && (
-                    <path d="M40 100 Q100 280 160 100 L140 280 Q100 320 60 280 Z" fill={color.hex} opacity="0.3" className="animate-pulse" />
+            <svg viewBox="0 0 200 300" className="w-full h-full drop-shadow-xl relative z-10 transition-all duration-1000">
+                {/* 13. ASCENSION HALO (Back) */}
+                {stage >= 13 && (
+                    <circle cx="100" cy="150" r="130" stroke="url(#ascendedGradient)" strokeWidth="2" className="animate-[spin_20s_linear_infinite]" opacity="0.5" />
                 )}
 
-                {/* BODY & LIMBS */}
-                {LIMBS[limbType]}
-                <g fill={bodyFill} stroke={strokeColor} strokeWidth="4">
+                {/* 7. ENERGY CAPE (Stage 7+) */}
+                {stage >= 7 && (
+                    <path d="M40 100 Q100 280 160 100 L140 280 Q100 320 60 280 Z" fill={primaryColor} opacity="0.3" className="animate-pulse" />
+                )}
+
+                {/* BASE BODY */}
+                <g fill={bodyFill} stroke={strokeColor} strokeWidth="4" className="transition-colors duration-1000">
                     {BODIES[bodyType]}
                 </g>
 
-                {/* CORE */}
-                <g style={glowStyle}>
-                    {CORES[coreType]}
-                    {isAwakened && <circle cx="100" cy="150" r="8" fill={coreFill} className={pulseClass} />}
+                {/* 1. SOUL SPARK (Internal Glow) */}
+                {isAwakened && (
+                    <path d="M70 100 L130 100 L120 200 L80 200 Z" fill={primaryColor} opacity="0.1" className="animate-pulse" />
+                )}
+
+                {/* 4. CRYSTAL BELT (Vector DB) */}
+                {stage >= 4 && (
+                    <g transform="translate(0, 20)">
+                        <rect x="70" y="140" width="60" height="10" rx="2" fill="#0f172a" />
+                        <circle cx="80" cy="145" r="3" fill={primaryColor} className="animate-ping" />
+                        <circle cx="100" cy="145" r="3" fill={primaryColor} className="animate-ping" style={{ animationDelay: '0.3s' }} />
+                        <circle cx="120" cy="145" r="3" fill={primaryColor} className="animate-ping" style={{ animationDelay: '0.6s' }} />
+                    </g>
+                )}
+
+                {/* LIMBS (Always present but animate at Stage 2) */}
+                <g stroke={strokeColor} strokeWidth="6" strokeLinecap="round">
+                    {/* Left Arm */}
+                    <path d="M40 100 Q20 150 30 200" fill="none" />
+                    {/* Right Arm */}
+                    <path d="M160 100 Q180 150 170 200" fill="none" />
+
+                    {/* Hands */}
+                    <circle cx="30" cy="200" r="8" fill={bodyFill} />
+                    <circle cx="170" cy="200" r="8" fill={bodyFill} />
+                </g>
+
+                {/* 10. HALO OF CRITERION (RAG Eval) */}
+                {stage >= 10 && (
+                    <ellipse cx="100" cy="40" rx="50" ry="10" stroke={primaryColor} strokeWidth="2" fill="none" className="animate-[spin_5s_linear_infinite]" />
+                )}
+
+                {/* HEAD AREA */}
+
+                {/* 6. RUNIC EARS (Audio) */}
+                {stage >= 6 && (
+                    <g>
+                        <path d="M40 80 L30 60 L50 70" stroke={primaryColor} strokeWidth="2" fill="none" />
+                        <path d="M160 80 L170 60 L150 70" stroke={primaryColor} strokeWidth="2" fill="none" />
+                    </g>
+                )}
+
+                {/* CORE (Always present, lights up Stage 1) */}
+                <g transform="translate(100, 150)">
+                    {/* 9. LIGHT GEARS (Chains) */}
+                    {stage >= 9 && (
+                        <circle r="28" stroke={primaryColor} strokeWidth="1" strokeDasharray="4 4" fill="none" className="animate-[spin_10s_linear_infinite]" />
+                    )}
+
+                    <circle r="15" fill={bodyFill} stroke={coreFill} strokeWidth="3" />
+                    {isAwakened && <circle r="8" fill={coreFill} className={pulseClass} />}
                 </g>
 
                 {/* EYES */}
-                <g style={glowStyle}>{EYES[eyeType]}</g>
+                <g transform="translate(0, 0)">
+                    {/* 5. MONOCLE (Vision) */}
+                    {stage >= 5 && (
+                        <circle cx="115" cy="85" r="10" stroke={primaryColor} strokeWidth="2" fill="none" opacity="0.8" />
+                    )}
 
-                {/* EVOLUTIONS */}
-                {/* Stage 3: Third Eye */}
+                    <circle cx="85" cy="85" r="6" fill={isAwakened ? primaryColor : '#000'} />
+                    <circle cx="115" cy="85" r="6" fill={isAwakened ? primaryColor : '#000'} />
+                </g>
+
+                {/* 3. THIRD EYE (Semantic Search) */}
                 {stage >= 3 && (
-                    <path d="M95 65 L100 55 L105 65 L100 75 Z" fill={color.hex} className="animate-ping origin-center" style={{ transformBox: 'fill-box' }} />
+                    <path d="M100 65 L95 75 L100 85 L105 75 Z" fill={primaryColor} className="animate-pulse" />
                 )}
 
-                {/* Stage 4: Crystal Belt */}
-                {stage >= 4 && (
-                    <g>
-                        <path d="M80 160 L120 160" stroke="#475569" strokeWidth="4" />
-                        <rect x="95" y="155" width="10" height="10" fill="#334155" />
-                        <circle cx="75" cy="160" r="4" fill={color.hex} className="animate-pulse" />
-                        <circle cx="125" cy="160" r="4" fill={color.hex} className="animate-pulse" style={{ animationDelay: '0.5s' }} />
-                    </g>
-                )}
-
-                {/* Stage 5: Monocle */}
-                {stage >= 5 && (
-                    <g>
-                        <circle cx="115" cy="85" r="10" stroke={color.hex} strokeWidth="2" fill="none" />
-                        <line x1="115" y1="85" x2="135" y2="65" stroke={color.hex} strokeWidth="1" opacity="0.6" />
-                    </g>
-                )}
-
-                {/* Stage 6: Runic Ears */}
-                {stage >= 6 && (
-                    <g>
-                        <path d="M50 80 Q40 90 50 100" stroke={color.hex} strokeWidth="2" fill="none" />
-                        <path d="M150 80 Q160 90 150 100" stroke={color.hex} strokeWidth="2" fill="none" />
-                    </g>
-                )}
-
-                {/* Stage 8: Floating Grimoire */}
+                {/* 8. FLOATING GRIMOIRE (RAG) */}
                 {stage >= 8 && (
-                    <g className="animate-[bounce_3s_infinite]" style={{ animationDelay: '1s' }}>
-                        <rect x="160" y="140" width="30" height="40" fill="#fde047" stroke="#854d0e" strokeWidth="2" transform="rotate(10 175 160)" />
-                    </g>
+                    <rect x="150" y="120" width="25" height="35" fill={primaryColor} stroke="#000" strokeWidth="2" className="animate-[bounce_4s_infinite]" rx="2" opacity="0.8" />
                 )}
 
-                {/* Stage 9: Light Gears */}
-                {stage >= 9 && (
-                    <g>
-                        <circle cx="40" cy="100" r="12" stroke={color.hex} strokeWidth="2" fill="none" strokeDasharray="4 2" className="animate-[spin_4s_linear_infinite]" />
-                        <circle cx="160" cy="100" r="12" stroke={color.hex} strokeWidth="2" fill="none" strokeDasharray="4 2" className="animate-[spin_4s_linear_infinite_reverse]" />
-                    </g>
-                )}
-
-                {/* Stage 10: Halo of Criterion */}
-                {stage >= 10 && (
-                    <g>
-                        <ellipse cx="100" cy="30" rx="40" ry="10" stroke={color.hex} strokeWidth="2" fill="none" className="animate-pulse" />
-                    </g>
-                )}
-
-                {/* Stage 11: Orbs of Power */}
+                {/* 11. ORBS OF AGENTS (Tools) */}
                 {stage >= 11 && (
-                    <g>
-                        <circle r="6" fill="#fbbf24" className="animate-[spin_3s_linear_infinite]" style={{ offsetPath: 'path("M100 150 m-60 0 a 60 60 0 1 0 120 0 a 60 60 0 1 0 -120 0")', offsetDistance: '0%' }}>
-                            <animateMotion dur="3s" repeatCount="indefinite" path="M100 150 m-60 0 a 60 60 0 1 0 120 0 a 60 60 0 1 0 -120 0" />
-                        </circle>
+                    <g className="animate-[spin_6s_linear_infinite]" style={{ transformOrigin: '100px 150px' }}>
+                        <circle cx="100" cy="90" r="5" fill="#fbbf24" />
                     </g>
                 )}
 
-                {/* Stage 12: Hive Mind (Mini-Golems) */}
+                {/* 12. HIVE MIND (Multi Agent) */}
                 {stage >= 12 && (
-                    <g opacity="0.5">
-                        <path d="M30 220 L50 220 L40 250 Z" fill={bodyFill} />
-                        <path d="M150 220 L170 220 L160 250 Z" fill={bodyFill} />
+                    <g className="animate-[spin_6s_linear_infinite_reverse]" style={{ transformOrigin: '100px 150px' }}>
+                        <circle cx="100" cy="210" r="5" fill="#a78bfa" />
+                        <circle cx="40" cy="150" r="5" fill="#a78bfa" />
+                        <circle cx="160" cy="150" r="5" fill="#a78bfa" />
                     </g>
-                )}
-
-                {/* Stage 13: Ascended Form */}
-                {stage >= 13 && (
-                    <circle cx="100" cy="150" r="120" stroke="url(#ascendedGradient)" strokeWidth="1" className="animate-[spin_10s_linear_infinite]" />
                 )}
 
                 <defs>
                     <linearGradient id="ascendedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor={color.hex} stopOpacity="0" />
-                        <stop offset="50%" stopColor="#ffffff" stopOpacity="0.8" />
-                        <stop offset="100%" stopColor={color.hex} stopOpacity="0" />
+                        <stop offset="0%" stopColor={primaryColor} stopOpacity="0" />
+                        <stop offset="50%" stopColor="#ffffff" stopOpacity="0.5" />
+                        <stop offset="100%" stopColor={primaryColor} stopOpacity="0" />
                     </linearGradient>
                 </defs>
             </svg>

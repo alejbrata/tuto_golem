@@ -10,21 +10,41 @@ export function PyodideProvider({ children }) {
 
     useEffect(() => {
         async function initPyodide() {
+            if (pyodide) return; // Already loaded in this component instance
+
             try {
-                // Load Pyodide script
-                if (!window.loadPyodide) {
-                    const script = document.createElement('script');
-                    script.src = "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js";
-                    script.async = true;
-                    document.body.appendChild(script);
-                    await new Promise((resolve) => script.onload = resolve);
-                }
+                // Singleton Pattern: If initialization already started globally, wait for it
+                if (!window.golemPyodidePromise) {
+                    window.golemPyodidePromise = (async () => {
+                        // Load script if not present
+                        if (!window.loadPyodide && !document.querySelector('script[src*="pyodide.js"]')) {
+                            const script = document.createElement('script');
+                            script.src = "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js";
+                            script.async = true;
+                            document.body.appendChild(script);
+                            await new Promise((resolve, reject) => {
+                                script.onload = resolve;
+                                script.onerror = () => reject(new Error("Failed to load Pyodide script from CDN"));
+                            });
+                        } else if (!window.loadPyodide) {
+                            // Wait for existing script tag to populate window.loadPyodide
+                            await new Promise(resolve => {
+                                const checkInterval = setInterval(() => {
+                                    if (window.loadPyodide) {
+                                        clearInterval(checkInterval);
+                                        resolve();
+                                    }
+                                }, 100);
+                            });
+                        }
 
-                // Initialize Pyodide
-                const py = await window.loadPyodide();
+                        // Initialize Pyodide
+                        const py = await window.loadPyodide({
+                            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/"
+                        });
 
-                // Define Mock Tiktoken Script
-                const MOCK_TIKTOKEN = `
+                        // Setup Environment
+                        const MOCK_TIKTOKEN = `
 import sys
 from types import ModuleType
 
@@ -33,10 +53,7 @@ class MockEncoding:
         self.name = name
     
     def encode(self, text):
-        # Deterministic tokenization for tutorial "El conocimiento es poder..."
-        # We map specific words to specific IDs to look realistic
         try:
-            # Simple hash-like fallback
             return [sum(ord(c) for c in word) for word in text.split()]
         except:
             return []
@@ -48,25 +65,28 @@ class MockTiktoken:
 if "tiktoken" not in sys.modules:
     sys.modules["tiktoken"] = MockTiktoken()
 `;
+                        // Removed micropip to save memory/startup time for now
+                        // await py.loadPackage("micropip");
+                        await py.runPythonAsync(MOCK_TIKTOKEN);
 
-                // Load micropip (optional, might be useful later)
-                await py.loadPackage("micropip");
+                        return py;
+                    })();
+                }
 
-                // Initialize Mock Tiktoken always for consistency in this tutorial
-                await py.runPythonAsync(MOCK_TIKTOKEN);
+                const py = await window.golemPyodidePromise;
 
-                // Redirect stdout/stderr
-
-                // Redirect stdout/stderr
+                // Configure output redirection for this component instance
                 py.setStdout({ batched: (msg) => setOutput((prev) => [...prev, msg]) });
                 py.setStderr({ batched: (msg) => setOutput((prev) => [...prev, `Error: ${msg}`]) });
 
                 setPyodide(py);
+                setOutput(prev => [...prev, "✨ Neural Link Established."]);
                 setIsLoading(false);
             } catch (err) {
                 console.error("Failed to load Pyodide:", err);
                 setError(err);
                 setIsLoading(false);
+                window.golemPyodidePromise = null; // Reset global promise on failure so we can retry
             }
         }
 
@@ -86,8 +106,12 @@ if "tiktoken" not in sys.modules:
         }
     };
 
+    const clearOutput = () => {
+        setOutput([]);
+    };
+
     return (
-        <PyodideContext.Provider value={{ pyodide, isLoading, error, runPython, output }}>
+        <PyodideContext.Provider value={{ pyodide, isLoading, error, runPython, output, clearOutput }}>
             {children}
         </PyodideContext.Provider>
     );

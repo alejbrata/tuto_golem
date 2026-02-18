@@ -1,0 +1,27 @@
+{
+    "id": "1-0",
+    "es": {
+        "title": "El Primer Aliento",
+        "lore": "Antes de la magia, existe la voz. Tu Golem es una estatua de piedra inerte en el centro de la Forja. No tiene mente, ni alma, solo potencial. Para despertarlo, no necesitas hechizos complejos ni matemáticas arcanas. Solo necesitas hablar. Pero cuidado: el Golem es un espejo. Si le hablas con caos, te devolverá caos. Si le hablas con propósito, te devolverá inteligencia.",
+        "lesson": "¡Bienvenido a **The Neural Forge**!\n\nAntes de entrar en las entrañas de la bestia (tokens, vectores, redes neuronales), entendamos qué **ES** una IA Generativa.\n\nEn su núcleo, un LLM (Large Language Model) es una **Máquina de Predicción**. No \"sabe\" cosas; calcula la probabilidad de la siguiente palabra.\n\nTu misión: Invocar la función `generar()` para ver cómo el Golem completa tu frase.",
+        "hints": [
+            "El Golem necesita una variable llamada `respuesta`.",
+            "Debes asignar el resultado de la función `generar(prompt)` a esa variable.",
+            "Solución: `respuesta = generar(prompt)`"
+        ],
+        "initialCode": "# El Golem espera tu voz.\nprompt = \"En un lugar de la Mancha, de cuyo nombre no quiero \"\n\n# Función mágica simulada (en capítulos futuros crearás la tuya)\ndef generar(texto_entrada):\n    # Simulación de un LLM completando texto\n    return texto_entrada + \"acordarme, no ha mucho tiempo que vivía un hidalgo...\"\n\n# 1. Despierta al Golem\n# Invoca la función 'generar' usando el 'prompt' y guarda el eco.\nrespuesta = None \n\nprint(f\"Golem dice: {respuesta}\")"
+    },
+    "en": {
+        "title": "The First Breath",
+        "lore": "Before magic, there is voice. Your Golem is an inert stone statue in the center of the Forge. It has no mind, no soul, only potential. To awaken it, you do not need complex spells or arcane mathematics. You only need to speak. But beware: the Golem is a mirror. If you speak with chaos, it returns chaos. If you speak with purpose, it returns intelligence.",
+        "lesson": "Welcome to **The Neural Forge**!\n\nBefore diving into the belly of the beast (tokens, vectors, neural networks), let's understand what Generative AI **IS**.\n\nAt its core, an LLM (Large Language Model) is a **Prediction Machine**. It doesn't \"know\" things; it calculates the probability of the next word.\n\nYour mission: Summon the `generate()` function to see how the Golem completes your sentence.",
+        "hints": [
+            "The Golem needs a variable named `respuesta` (response).",
+            "You must assign the result of the function `generar(prompt)` to that variable.",
+            "Solution: `respuesta = generar(prompt)`"
+        ],
+        "initialCode": "# The Golem awaits your voice.\nprompt = \"In a hole in the ground there lived a \"\n\n# Simulated magic function (you will build your own later)\ndef generar(input_text):\n    # Simulating an LLM completing text\n    return input_text + \"hobbit. Not a nasty, dirty, wet hole...\"\n\n# 1. Awaken the Golem\n# Invoke the 'generar' function using the 'prompt' and save the echo.\nrespuesta = None \n\nprint(f\"Golem says: {respuesta}\")"
+    },
+    "solutionCode": "prompt = \"En un lugar de la Mancha, de cuyo nombre no quiero \"\n\ndef generar(texto_entrada):\n    return texto_entrada + \"acordarme, no ha mucho tiempo que vivía un hidalgo...\"\n\nrespuesta = generar(prompt)\n\nprint(f\"Golem dice: {respuesta}\")",
+    "validationCode": "\ndef validar_mision(globals_dict):\n    try:\n        if 'respuesta' not in globals_dict:\n            return False, \"El Golem sigue en silencio. Debes definir la variable 'respuesta'.\"\n        \n        res = globals_dict['respuesta']\n        if not isinstance(res, str):\n            return False, \"La respuesta del Golem debe ser texto.\"\n            \n        if \"acordarme\" not in res and \"hobbit\" not in res:\n            return False, \"El Golem no ha completado la frase correctamente. ¿Usaste la función 'generar'?\"\n\n        return True, \"¡Ha despertado! El Golem respira. Ahora, aprendamos cómo funciona su mente.\"\n    except Exception as e:\n        return False, f\"Error en el despertar: {str(e)}\"\n"
+}

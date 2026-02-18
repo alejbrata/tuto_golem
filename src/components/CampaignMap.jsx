@@ -7,9 +7,13 @@ const CampaignMap = ({ chapters, currentChapterIndex, completedChapters, onSelec
             <div className="absolute top-0 bottom-0 left-1/2 w-1 bg-slate-800 -translate-x-1/2 z-0"></div>
 
             {chapters.map((chapter, index) => {
-                const isCompleted = completedChapters.includes(chapter.id) || index < currentChapterIndex;
+                const isCompleted = completedChapters.includes(chapter.id);
                 const isCurrent = index === currentChapterIndex;
-                const isLocked = !isCompleted && !isCurrent;
+
+                // Unlock if it's the first chapter, OR if it's completed, OR if the previous chapter is completed
+                const previousChapterCompleted = index > 0 && completedChapters.includes(chapters[index - 1].id);
+                const isUnlocked = index === 0 || isCompleted || previousChapterCompleted;
+                const isLocked = !isUnlocked;
 
                 // Alternating sides for 'S' feel
                 const isLeft = index % 2 === 0;
@@ -43,10 +47,10 @@ const CampaignMap = ({ chapters, currentChapterIndex, completedChapters, onSelec
                                 {chapter.title}
                             </h3>
                         </button>
-                    </div>
+                    </div >
                 );
             })}
-        </div>
+        </div >
     );
 };
 
