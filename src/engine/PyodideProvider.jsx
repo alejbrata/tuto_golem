@@ -100,7 +100,7 @@ if "tiktoken" not in sys.modules:
             await pyodide.runPythonAsync(code);
         } catch (err) {
             console.error("Pyodide run error:", err);
-            setError(err);
+            // setError(err); // Do NOT set global error on runtime errors, only on init failure
             setOutput((prev) => [...prev, `Traceback: ${err.message}`]);
             throw err; // Re-throw so the caller knows it failed
         }
