@@ -87,7 +87,7 @@ function StoryCard({ title, lore, lesson, hints = [], onSolve, accentColor = 'cy
                     {onSolve && (
                         <button
                             onClick={() => {
-                                if (confirm(text?.reveal_confirm || "Are you sure?")) {
+                                if (window.confirm(text?.reveal_confirm || "Are you sure?")) {
                                     onSolve();
                                 }
                             }}

@@ -1,0 +1,30 @@
+{
+    "id": "5-2",
+    "title": "La API de la Realidad (WebMCP)",
+    "es": {
+        "title": "La API de la Realidad (WebMCP)",
+        "lore": "Chrome ha abierto una puerta prohibida: WebMCP. Ahora el Golem no solo lee archivos, sino que puede ver lo que tú ves en la pestaña del navegador.",
+        "lesson": "Registra una 'Skill' que permita al Golem capturar el título de la página web actual usando la API experimental de Chrome.",
+        "hints": [
+            "Usa register_tool() para exponer la función"
+        ],
+        "initialCode": "import chrome_ai\n\n# La función debe llamarse registrar_vision() o register_vision()\ndef registrar_vision():\n    # Usa chrome_ai.register_tool('get_title', lambda: window.document.title)\n    pass",
+        "solutionCode": "import chrome_ai\n\ndef registrar_vision():\n    chrome_ai.register_tool('get_title', lambda: window.document.title)",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'registrar_vision' in globals_dict:\n         return [True, '¡Skill registrada! El Golem ha tomado el control del navegador.']\n    return [False, 'Falta la función registrar_vision.']"
+    },
+    "en": {
+        "title": "The Reality API (WebMCP)",
+        "lore": "Chrome has opened a forbidden door: WebMCP. Now the Golem doesn't just read files; it can see what you see in the browser tab.",
+        "lesson": "Register a 'Skill' that allows the Golem to capture the current webpage title using the experimental Chrome API.",
+        "hints": [
+            "Use register_tool() to expose the function",
+            "The tool name should be 'get_title'",
+            "Use a lambda function to return window.document.title"
+        ],
+        "initialCode": "import chrome_ai\n\n# The function must be named register_vision() or registrar_vision()\ndef register_vision():\n    # Use chrome_ai.register_tool('get_title', lambda: window.document.title)\n    pass",
+        "solutionCode": "import chrome_ai\n\ndef register_vision():\n    chrome_ai.register_tool('get_title', lambda: window.document.title)",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'register_vision' in globals_dict:\n        return [True, 'Skill registered! The Golem has taken control of the browser.']\n    return [False, 'Missing register_vision function.']"
+    },
+    "solutionCode": "import chrome_ai\n\n# Función puente bilingüe\ndef registrar_vision():\n    chrome_ai.register_tool('get_title', lambda: window.document.title)\n\ndef register_vision():\n    return registrar_vision()",
+    "validationCode": "\ndef validar_mision(globals_dict):\n    if 'registrar_vision' in globals_dict or 'register_vision' in globals_dict:\n        return [True, 'Skill registered!']\n    return [False, 'Skill logic missing.']\n"
+}

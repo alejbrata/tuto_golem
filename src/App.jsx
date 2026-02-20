@@ -19,10 +19,17 @@ import chapter10 from './content/book3-chapter3.json';
 import chapter11 from './content/book4-chapter1.json';
 import chapter12 from './content/book4-chapter2.json';
 import chapter13 from './content/book4-chapter3.json';
+import chapter14 from './content/book5-chapter1.json';
+import chapter15 from './content/book5-chapter2.json';
+import chapter16 from './content/book5-chapter3.json';
+import chapter17 from './content/book5-chapter4.json';
+import chapter18 from './content/book5-chapter5.json';
+import chapter19 from './content/book5-chapter6.json';
+import chapter20 from './content/book5-chapter7.json';
 import './index.css';
 import { UI_TEXT, GOLEM_PARTS_I18N } from './translations';
 
-const CHAPTERS = [chapter0, chapter1, chapter2, chapter3, chapter4, chapter5, chapter6, chapter7, chapter8, chapter9, chapter10, chapter11, chapter12, chapter13];
+const CHAPTERS = [chapter0, chapter1, chapter2, chapter3, chapter4, chapter5, chapter6, chapter7, chapter8, chapter9, chapter10, chapter11, chapter12, chapter13, chapter14, chapter15, chapter16, chapter17, chapter18, chapter19, chapter20];
 
 import CampaignMap from './components/CampaignMap';
 import IntroScreen from './components/IntroScreen';
@@ -78,8 +85,8 @@ function Game({ dna, onExit }) {
     lore: chapterContentRaw[language]?.lore || chapterContentRaw.lore,
     lesson: chapterContentRaw[language]?.lesson || chapterContentRaw.lesson,
     hints: chapterContentRaw[language]?.hints || chapterContentRaw.hints,
-    // initialCode might be shared or separated later
-    initialCode: chapterContentRaw[language]?.initialCode || chapterContentRaw.initialCode || ""
+    initialCode: chapterContentRaw[language]?.initialCode || chapterContentRaw.initialCode || "",
+    solutionCode: chapterContentRaw[language]?.solutionCode || chapterContentRaw.solutionCode || ""
   };
 
   const [code, setCode] = useState(chapterContent.initialCode);
@@ -88,6 +95,17 @@ function Game({ dna, onExit }) {
   const [isSuccessPending, setIsSuccessPending] = useState(false); // NEW: Waiting for user to click Continue
 
   const getBookInfo = (chapterIdx) => {
+    // Advanced: Book 5 (Index 14+) - "Agency Awakening"
+    if (chapterIdx >= 14) return {
+      id: 5,
+      title: TEXT.book5_title || TEXT.advanced_section || "AGENCY AWAKENING",
+      color: 'from-fuchsia-600 to-pink-600',
+      text: 'fuchsia-100',
+      bg: 'bg-slate-950',
+      accent: 'fuchsia',
+      experimental: true // Flag for warning UI
+    };
+
     if (chapterIdx <= 4) return { id: 1, title: TEXT.book1_title, color: 'from-cyan-500 to-blue-600', text: 'slate-200', bg: 'bg-slate-950', accent: 'cyan' }; // Ch 0-4 (5 chapters)
     if (chapterIdx <= 7) return { id: 2, title: TEXT.book2_title, color: 'from-emerald-500 to-teal-600', text: 'emerald-100', bg: 'bg-emerald-950', accent: 'emerald' }; // Ch 5-7 (3 chapters)
     if (chapterIdx <= 10) return { id: 3, title: TEXT.book3_title, color: 'from-amber-500 to-orange-600', text: 'amber-100', bg: 'bg-slate-900', accent: 'amber' }; // Ch 8-10 (3 chapters)
@@ -111,8 +129,8 @@ function Game({ dna, onExit }) {
     setStatus(null);
     setIsSuccessPending(false); // Reset pending state
     if (clearOutput) clearOutput(); // Clear console on chapter change
-  }, [currentChapterIndex, language]);
-  // Added 'language' dependency so code comments update if language changes
+  }, [currentChapterIndex, language, clearOutput]);
+  // Added 'language' and 'clearOutput' dependency so code comments update and console clears correctly
 
   // Save progress (Completed Chapters)
   useEffect(() => {

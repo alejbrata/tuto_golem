@@ -13,6 +13,7 @@ export const UI_TEXT = {
         book2_title: "Los Sentidos del Alquimista",
         book3_title: "El Código Sagrado",
         book4_title: "La Voluntad del Golem",
+        book5_title: "La Red de la Agencia",
         // Navegación y Referencias
         app_title: "LA FORJA NEURONAL",
         book_completed: "LIBRO COMPLETADO",
@@ -41,6 +42,9 @@ export const UI_TEXT = {
         no_visions: "NO HAY MÁS VISIONES",
         reveal_solution: "REVELAR SOLUCIÓN",
         reveal_confirm: "¿Estás seguro? Esto reemplazará tu hechizo actual con la solución arcana.",
+        // Book 5 (Advanced)
+        advanced_section: "Senda de la Agencia",
+        experimental_warning: "ADVERTENCIA: Tecnología Experimental (Chrome 2026)",
     },
     en: {
         exit: "EXIT",
@@ -56,6 +60,7 @@ export const UI_TEXT = {
         book2_title: "The Senses of the Alchemist",
         book3_title: "The Sacred Code",
         book4_title: "The Will of the Golem",
+        book5_title: "The Agency Network",
         // Navigation & Refs
         app_title: "THE NEURAL FORGE",
         book_completed: "BOOK COMPLETED",
@@ -84,6 +89,9 @@ export const UI_TEXT = {
         no_visions: "NO MORE VISIONS",
         reveal_solution: "REVEAL SOLUTION",
         reveal_confirm: "Are you sure? This will replace your current spell with the ancient solution.",
+        // Book 5 (Advanced)
+        advanced_section: "Agency Path",
+        experimental_warning: "WARNING: Experimental Technology (Chrome 2026)",
     }
 };
 
@@ -102,7 +110,14 @@ export const GOLEM_PARTS_I18N = {
         { name: "HALO DE VERDAD", desc: "Evaluación asegura precisión factual." },
         { name: "ORBE DE HERRAMIENTAS", desc: "Function Calling otorga agencia." },
         { name: "ENLACE DE COLMENA", desc: "Sistemas Multi-Agente crean una mente colectiva." },
-        { name: "FORMA ASCENDIDA", desc: "Lógica de Grafos alcanza recursión infinita." }
+        { name: "FORMA ASCENDIDA", desc: "Lógica de Grafos alcanza recursión infinita." },
+        { name: "ANTENA DE NEXO", desc: "El Golem ahora escucha frecuencias de servidores externos (MCP)." },
+        { name: "NÚCLEO DE AGENCIA", desc: "La voluntad del Golem se extiende al navegador (WebMCP)." },
+        { name: "MANIPULADOR DE ARTEFACTOS", desc: "El Golem ahora opera herramientas externas y genera documentos contables." },
+        { name: "COMPÁS ARQUITECTÓNICO", desc: "El Golem ahora puede estructurar sistemas complejos usando documentos de diseño SDD." },
+        { name: "HALO DE EVALUACIÓN", desc: "El Golem ahora puede juzgar la calidad de sus propios pensamientos y filtrar alucinaciones." },
+        { name: "PROYECTOR DE PENSAMIENTOS", desc: "El Golem ahora puede manifestar interfaces visuales complejas mediante Markdown avanzado." },
+        { name: "FORMA ASCENDIDA", desc: "El Golem es ahora una entidad autónoma que reside en el cristal local, libre de la nube." }
     ],
     en: [
         { name: "VITAL BREATH", desc: "The first breath of consciousness." },
@@ -118,6 +133,13 @@ export const GOLEM_PARTS_I18N = {
         { name: "TRUTH HALO", desc: "Evaluation ensures factual accuracy." },
         { name: "TOOL ORB", desc: "Function Calling grants agency." },
         { name: "HIVE LINK", desc: "Multi-Agent systems create a collective mind." },
-        { name: "ASCENDED FORM", desc: "Graph logic achieves infinite recursion." }
+        { name: "ASCENDED FORM", desc: "Graph logic achieves infinite recursion." },
+        { name: "NEXUS ANTENNA", desc: "The Golem now listens to external server frequencies (MCP)." },
+        { name: "AGENCY CORE", desc: "The Golem's will extends to the browser (WebMCP)." },
+        { name: "ARTIFACT MANIPULATOR", desc: "The Golem now operates external tools and generates accounting documents." },
+        { name: "ARCHITECTURAL COMPASS", desc: "The Golem can now structure complex systems using SDD design documents." },
+        { name: "EVALUATION HALO", desc: "The Golem can now judge the quality of its own thoughts and filter out hallucinations." },
+        { name: "THOUGHT PROJECTOR", desc: "The Golem can now manifest complex visual interfaces through advanced Markdown." },
+        { name: "ASCENDED FORM", desc: "The Golem is now an autonomous entity residing in the local crystal, free from the cloud." }
     ]
 };

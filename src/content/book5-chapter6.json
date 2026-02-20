@@ -1,0 +1,30 @@
+{
+    "id": "5-6",
+    "title": "Interfaces de Pensamiento (M4A)",
+    "es": {
+        "title": "Interfaces de Pensamiento (M4A)",
+        "lore": "Las palabras a veces son insuficientes para describir la complejidad de la magia. Un verdadero Agente debe ser capaz de proyectar sus pensamientos en estructuras visuales. El 'Markdown para Agentes' permite que el Golem dibuje tablas, cuadros y alertas en tiempo real.",
+        "lesson": "Instruye al Golem para que genere una respuesta formateada en Markdown avanzado. Debe incluir una tabla de 'Ingredientes de Hechizo' y una alerta de 'Estado Crítico' usando sintaxis de bloques personalizada.",
+        "hints": [
+            "Usa el formato de tabla de Markdown: | Col1 | Col2 |",
+            "Las alertas se definen con constructos como > [!CAUTION]"
+        ],
+        "initialCode": "def generar_interfaz_dinamica():\n    # Crea un string que contenga una tabla y una alerta\n    pass",
+        "solutionCode": "def generar_interfaz_dinamica():\n    return \"| Componente | Potencia |\\n| :--- | :--- |\\n| Nexo MCP | Alta |\\n\\n> [!IMPORTANT]\\n> Interfaz de Agente activada.\"",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'generar_interfaz_dinamica' in globals_dict:\n        res = globals_dict['generar_interfaz_dinamica']()\n        if '|' in res and '>' in res:\n            return [True, '¡Visión proyectada! El Golem ahora domina el arte de crear interfaces dinámicas para el usuario.']\n    return [False, 'La interfaz no tiene los elementos visuales requeridos.']"
+    },
+    "en": {
+        "title": "Thinking Interfaces (M4A)",
+        "lore": "Words are sometimes insufficient to describe the complexity of magic. A true Agent must be able to project its thoughts into visual structures. 'Markdown for Agents' allows the Golem to draw tables, boxes, and alerts in real-time.",
+        "lesson": "Instruct the Golem to generate a response formatted in advanced Markdown. It must include a 'Spell Ingredients' table and a 'Critical Status' alert using custom block syntax.",
+        "hints": [
+            "Use Markdown table format: | Col1 | Col2 |",
+            "Alerts are defined with constructs like > [!CAUTION]"
+        ],
+        "initialCode": "def generate_dynamic_ui():\n    # Create a string containing a table and an alert\n    pass",
+        "solutionCode": "def generate_dynamic_ui():\n    return \"| Component | Power |\\n| :--- | :--- |\\n| MCP Nexus | High |\\n\\n> [!IMPORTANT]\\n> Agent Interface activated.\"",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'generate_dynamic_ui' in globals_dict:\n        res = globals_dict['generate_dynamic_ui']()\n        if '|' in res and '>' in res:\n            return [True, 'Vision projected! The Golem has mastered the art of creating dynamic interfaces for the user.']\n    return [False, 'The interface lacks the required visual elements.']"
+    },
+    "solutionCode": "def generar_interfaz_dinamica():\n    return \"| Componente | Potencia |\\n| :--- | :--- |\\n| Nexo MCP | Alta |\\n\\n> [!IMPORTANT]\\n> Interfaz de Agente activada.\"",
+    "validationCode": "\ndef validar_mision(globals_dict):\n    fn = globals_dict.get('generar_interfaz_dinamica') or globals_dict.get('generate_dynamic_ui')\n    if fn:\n        try:\n            res = fn()\n            if '|' in res and '>' in res:\n                return [True, 'Vision projected!']\n        except: pass\n    return [False, 'Missing table or alert in output.']\n"
+}

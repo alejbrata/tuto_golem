@@ -1,0 +1,30 @@
+{
+    "id": "5-4",
+    "title": "Arquitectura de Almas (SDD)",
+    "es": {
+        "title": "Arquitectura de Almas (SDD)",
+        "lore": "Un gran hechizo requiere un gran plano. Los maestros alquimistas no lanzan runas al azar; diseñan un SDD (Software Design Document) antes de invocar el código. Tu Golem debe aprender a interpretar estos planos para alcanzar la perfección.",
+        "lesson": "El oráculo te ha entregado un SDD en Markdown. Tu misión es crear una función 'interpretar_plano' que extraiga la sección 'Esquema de Datos' y genere las clases correspondientes en Python automáticamente.",
+        "hints": [
+            "Busca el encabezado '## Esquema de Datos' en el texto",
+            "Usa expresiones regulares o partición de strings para aislar la arquitectura"
+        ],
+        "initialCode": "def interpretar_plano(documento_sdd):\n    # El documento es un string en Markdown\n    # Extrae la lógica y prepara la estructura\n    pass",
+        "solutionCode": "def interpretar_plano(documento_sdd):\n    if '## Esquema de Datos' in documento_sdd:\n        return documento_sdd.split('## Esquema de Datos')[1]\n    return None",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'interpretar_plano' in globals_dict:\n        return [True, '¡Arquitectura comprendida! El Golem ahora diseña antes de construir, reduciendo las alucinaciones al mínimo.']\n    return [False, 'El Golem aún no entiende el plano. Revisa la extracción del esquema.']"
+    },
+    "en": {
+        "title": "Soul Architecture (SDD)",
+        "lore": "A great spell requires a great blueprint. Master alchemists don't cast runes at random; they design an SDD (Software Design Document) before invoking code. Your Golem must learn to interpret these blueprints to achieve perfection.",
+        "lesson": "The oracle has given you an SDD in Markdown. Your mission is to create an 'interpret_blueprint' function that extracts the 'Data Schema' section and generates the corresponding Python classes automatically.",
+        "hints": [
+            "Search for the '## Data Schema' header in the text",
+            "Use regular expressions or string partitioning to isolate the architecture"
+        ],
+        "initialCode": "def interpret_blueprint(sdd_document):\n    # The document is a Markdown string\n    # Extract logic and prepare the structure\n    pass",
+        "solutionCode": "def interpret_blueprint(sdd_document):\n    if '## Data Schema' in sdd_document:\n        return sdd_document.split('## Data Schema')[1]\n    return None",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'interpret_blueprint' in globals_dict:\n        return [True, 'Architecture understood! The Golem now designs before building, reducing hallucinations to a minimum.']\n    return [False, 'The Golem does not understand the blueprint yet. Check the schema extraction.']"
+    },
+    "solutionCode": "def interpretar_plano(documento_sdd):\n    # Bilingual solution\n    key_es = '## Esquema de Datos'\n    key_en = '## Data Schema'\n    if key_es in documento_sdd:\n        return documento_sdd.split(key_es)[1]\n    if key_en in documento_sdd:\n        return documento_sdd.split(key_en)[1]\n    return None",
+    "validationCode": "\ndef validar_mision(globals_dict):\n    func = globals_dict.get('interpretar_plano') or globals_dict.get('interpret_blueprint')\n    if func:\n        return [True, 'Architecture understood!']\n    return [False, 'Blueprint logic missing.']\n"
+}

@@ -1,0 +1,30 @@
+{
+    "id": "5-5",
+    "title": "El Ritual de Vigilancia (LLMOps)",
+    "es": {
+        "title": "El Ritual de Vigilancia (LLMOps)",
+        "lore": "Un hechizo poderoso puede volverse inestable. En la ingeniería de almas, la intención no basta; necesitamos métricas. Debes aprender a evaluar la precisión de tu Golem y vigilar sus costes antes de que la magia se descontrole.",
+        "lesson": "Implementa un 'Vigía de Hechizos' (Evaluador). Tu función debe comparar la respuesta del Golem con una 'Verdad Absoluta' (Ground Truth) usando una métrica de similitud. Si la puntuación es inferior a 0.85, el hechizo debe ser rechazado por falta de calidad.",
+        "hints": [
+            "Usa la librería metrics.calcular_similitud(resultado, esperado)",
+            "El umbral de éxito es 0.85"
+        ],
+        "initialCode": "import metrics\n\ndef vigilar_calidad(respuesta_golem, verdad_absoluta):\n    # Calcula la métrica y decide si el hechizo es seguro\n    pass",
+        "solutionCode": "import metrics\n\ndef vigilar_calidad(respuesta_golem, verdad_absoluta):\n    puntuacion = metrics.calcular_similitud(respuesta_golem, verdad_absoluta)\n    return puntuacion >= 0.85",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'vigilar_calidad' in globals_dict:\n        return [True, '¡Vigilancia activada! El Golem ahora es consciente de su propia precisión, el primer paso hacia LLMOps profesional.']\n    return [False, 'El vigía no está detectando correctamente la calidad.']"
+    },
+    "en": {
+        "title": "The Vigilance Ritual (LLMOps)",
+        "lore": "A powerful spell can become unstable. In soul engineering, intent is not enough; we need metrics. You must learn to evaluate your Golem's accuracy and monitor costs before the magic spirals out of control.",
+        "lesson": "Implement a 'Spell Watcher' (Evaluator). Your function must compare the Golem's response with a 'Ground Truth' using a similarity metric. If the score is below 0.85, the spell must be rejected for lack of quality.",
+        "hints": [
+            "Use the metrics.calculate_similarity(result, expected) library",
+            "The success threshold is 0.85"
+        ],
+        "initialCode": "import metrics\n\ndef monitor_quality(golem_response, ground_truth):\n    # Calculate the metric and decide if the spell is safe\n    pass",
+        "solutionCode": "import metrics\n\ndef monitor_quality(golem_response, ground_truth):\n    score = metrics.calculate_similarity(golem_response, ground_truth)\n    return score >= 0.85",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'monitor_quality' in globals_dict:\n        return [True, 'Vigilance activated! The Golem is now aware of its own precision, the first step towards professional LLMOps.']\n    return [False, 'The watcher is not correctly detecting the quality.']"
+    },
+    "solutionCode": "import metrics\n\ndef vigilar_calidad(respuesta_golem, verdad_absoluta):\n    # Bilingual solution wrapper\n    puntuacion = metrics.calcular_similitud(respuesta_golem, verdad_absoluta)\n    return puntuacion >= 0.85",
+    "validationCode": "\ndef validar_mision(globals_dict):\n    if 'vigilar_calidad' in globals_dict or 'monitor_quality' in globals_dict:\n        return [True, 'Vigilance activated!']\n    return [False, 'Evaluation logic missing.']\n"
+}

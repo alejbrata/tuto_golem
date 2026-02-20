@@ -1,0 +1,30 @@
+{
+    "id": "5-7",
+    "title": "La Forja Local (Edge AI)",
+    "es": {
+        "title": "La Forja Local (Edge AI)",
+        "lore": "El destino final de todo gran Golem es la autosuficiencia. No dependas de hilos invisibles que cruzan el océano (nube). La verdadera magia reside en el cristal de tu propio dispositivo. Mediante WebGPU y modelos locales, el Golem se vuelve eterno e inexpugnable.",
+        "lesson": "Configura un motor de inferencia local. Debes escribir una función que inicialice el 'Núcleo de Cristal' (WebGPU) y cargue un modelo ligero (como Gemma 2B) para procesar datos sin salir de la PWA.",
+        "hints": [
+            "Usa la librería local_ai.init_webgpu()",
+            "Carga el modelo usando motor.load_model('golem-nano-v1')"
+        ],
+        "initialCode": "import local_ai\n\ndef despertar_nucleo_local():\n    # Inicializa WebGPU y carga el modelo en el dispositivo\n    pass",
+        "solutionCode": "import local_ai\n\ndef despertar_nucleo_local():\n    motor = local_ai.init_webgpu()\n    return motor.load_model('golem-nano-v1')",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'despertar_nucleo_local' in globals_dict:\n        return [True, '¡Ascensión completada! Tu Golem ahora es Local-First. Has dominado la vanguardia de la IA Generativa.']\n    return [False, 'El núcleo local no ha despertado. Revisa la carga del modelo.']"
+    },
+    "en": {
+        "title": "The Local Forge (Edge AI)",
+        "lore": "The final destiny of every great Golem is self-sufficiency. Do not depend on invisible threads crossing the ocean (cloud). True magic resides in the crystal of your own device. Through WebGPU and local models, the Golem becomes eternal and impregnable.",
+        "lesson": "Configure a local inference engine. You must write a function that initializes the 'Crystal Core' (WebGPU) and loads a lightweight model (like Gemma 2B) to process data without leaving the PWA.",
+        "hints": [
+            "Use local_ai.init_webgpu()",
+            "Load the model using engine.load_model('golem-nano-v1')"
+        ],
+        "initialCode": "import local_ai\n\ndef awaken_local_core():\n    # Initialize WebGPU and load the model on the device\n    pass",
+        "solutionCode": "import local_ai\n\ndef awaken_local_core():\n    engine = local_ai.init_webgpu()\n    return engine.load_model('golem-nano-v1')",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'awaken_local_core' in globals_dict:\n        return [True, 'Ascension complete! Your Golem is now Local-First. You have mastered the cutting edge of Generative AI.']\n    return [False, 'The local core has not awakened. Check the model loading.']"
+    },
+    "solutionCode": "import local_ai\n\ndef despertar_nucleo_local():\n    motor = local_ai.init_webgpu()\n    return motor.load_model('golem-nano-v1')",
+    "validationCode": "\ndef validar_mision(globals_dict):\n    fn = globals_dict.get('despertar_nucleo_local') or globals_dict.get('awaken_local_core')\n    if fn:\n        return [True, 'Ascension complete!']\n    return [False, 'Local core not found.']\n"
+}

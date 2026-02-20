@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 function IntroScreen({ onComplete, language = 'es', setLanguage }) {
     const [step, setStep] = useState(0);

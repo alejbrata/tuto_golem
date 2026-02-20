@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useState, useRef } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 
 const PyodideContext = createContext(null);
 
@@ -64,6 +65,53 @@ class MockTiktoken:
 
 if "tiktoken" not in sys.modules:
     sys.modules["tiktoken"] = MockTiktoken()
+
+# --- BOOK 5 MOCKS ---
+
+class MockMCPServer:
+    def __init__(self, name):
+        self.name = name
+    def read_files(self):
+        return f"Leyendo datos del servidor MCP '{self.name}': [gasto1.csv, balance.xlsx]"
+
+class MockMCPMock:
+    def connect_to_server(self, name):
+        print(f"[NEXO] Conectando al servidor MCP externo: {name}...")
+        return MockMCPServer(name)
+
+class MockChromeAI:
+    def register_tool(self, name, action):
+        print(f"[WEBMCP] Registrada habilidad global en navegador: '{name}'.")
+
+class MockAlquimiaDocs:
+    def generar_excel(self, data, formato='contable'):
+        return f"Excel estructurado generado con {data} (formato: {formato})"
+    def generate_excel(self, data, format='accounting'):
+        return f"Structured Excel generated with {data} (format: {format})"
+
+class MockMetrics:
+    def calcular_similitud(self, a, b):
+        print(f"[EVAL] Comparando similitud semántica. Puntuación: 0.92")
+        return 0.92
+    def calculate_similarity(self, a, b):
+        print(f"[EVAL] Comparing semantic similarity. Score: 0.92")
+        return 0.92
+
+class MockLocalEngine:
+    def load_model(self, name):
+        print(f"[WEBGPU] Cargando modelo '{name}' directamente en VRAM del navegador...")
+        return "Motor Edge Listo. Sin latencia."
+        
+class MockLocalAI:
+    def init_webgpu(self):
+        print(f"[EDGE] Inicializando WebGPU para inferencia off-grid...")
+        return MockLocalEngine()
+
+if "mcp_mock" not in sys.modules: sys.modules["mcp_mock"] = MockMCPMock()
+if "chrome_ai" not in sys.modules: sys.modules["chrome_ai"] = MockChromeAI()
+if "alquimia_docs" not in sys.modules: sys.modules["alquimia_docs"] = MockAlquimiaDocs()
+if "metrics" not in sys.modules: sys.modules["metrics"] = MockMetrics()
+if "local_ai" not in sys.modules: sys.modules["local_ai"] = MockLocalAI()
 `;
                         // Removed micropip to save memory/startup time for now
                         // await py.loadPackage("micropip");
@@ -91,7 +139,7 @@ if "tiktoken" not in sys.modules:
         }
 
         initPyodide();
-    }, []);
+    }, [pyodide]);
 
     const runPython = async (code) => {
         if (!pyodide) return;
@@ -106,9 +154,9 @@ if "tiktoken" not in sys.modules:
         }
     };
 
-    const clearOutput = () => {
+    const clearOutput = useCallback(() => {
         setOutput([]);
-    };
+    }, []);
 
     return (
         <PyodideContext.Provider value={{ pyodide, isLoading, error, runPython, output, clearOutput }}>

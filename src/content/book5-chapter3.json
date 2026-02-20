@@ -1,0 +1,30 @@
+{
+    "id": "5-3",
+    "title": "El Orbe de Herramientas (Skills)",
+    "es": {
+        "title": "El Orbe de Herramientas (Skills)",
+        "lore": "Un agente sin herramientas es solo un observador. Para que tu Golem sea útil en la Forja, debe aprender a transformar datos crudos en pergaminos estructurados. Es hora de otorgarle el poder de crear documentos universales.",
+        "lesson": "Crea una Skill llamada 'exportar_a_contabilidad' que tome una lista de gastos y use la librería 'alquimia_docs' para generar un archivo .xlsx con las columnas maestras: ID, Fecha, NIF, Nombre, Concepto y Total.",
+        "hints": [
+            "La función debe recibir el argumento 'datos_gastos'",
+            "Usa docs.generar_excel(datos_gastos, formato='contable_master')"
+        ],
+        "initialCode": "import alquimia_docs as docs\n\ndef forjar_herramienta():\n    # Define aquí la Skill para exportar a Excel\n    pass",
+        "solutionCode": "import alquimia_docs as docs\n\ndef forjar_herramienta():\n    return lambda datos: docs.generar_excel(datos, formato='contable_master')",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'forjar_herramienta' in globals_dict:\n        return [True, '¡Herramienta forjada! El Golem ahora puede generar archivos compatibles con A3, Sage y Holded.']\n    return [False, 'La herramienta no parece estar lista para la forja.']"
+    },
+    "en": {
+        "title": "The Tool Orb (Skills)",
+        "lore": "An agent without tools is just an observer. For your Golem to be useful in the Forge, it must learn to transform raw data into structured scrolls. It is time to grant it the power to create universal documents.",
+        "lesson": "Create a Skill called 'export_to_accounting' that takes a list of expenses and uses the 'alquimia_docs' library to generate a .xlsx file with master columns: ID, Date, NIF, Name, Concept, and Total.",
+        "hints": [
+            "The function must receive the 'expense_data' argument",
+            "Use docs.generate_excel(expense_data, format='accounting_master')"
+        ],
+        "initialCode": "import alquimia_docs as docs\n\ndef forge_tool():\n    # Define the Skill for Excel export here\n    pass",
+        "solutionCode": "import alquimia_docs as docs\n\ndef forge_tool():\n    return lambda data: docs.generate_excel(data, format='accounting_master')",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'forge_tool' in globals_dict:\n        return [True, 'Tool forged! The Golem can now generate files compatible with A3, Sage, and Holded.']\n    return [False, 'The tool does not seem ready for the forge.']"
+    },
+    "solutionCode": "import alquimia_docs as docs\n\ndef forjar_herramienta():\n    # Bilingual wrapper for solution\n    return lambda datos: docs.generar_excel(datos, formato='contable_master')",
+    "validationCode": "\ndef validar_mision(globals_dict):\n    if 'forjar_herramienta' in globals_dict or 'forge_tool' in globals_dict:\n        return [True, 'Tool forged! Compatible with A3/Sage/Holded.']\n    return [False, 'Tool logic missing.']\n"
+}

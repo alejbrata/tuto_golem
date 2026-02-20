@@ -46,6 +46,12 @@ const CampaignMap = ({ chapters, currentChapterIndex, completedChapters, onSelec
                             <h3 className={`font-bold text-sm leading-tight ${isLocked ? 'text-slate-500' : 'text-slate-200'}`}>
                                 {chapter.title}
                             </h3>
+                            {/* Experimental Tag for Book 5 */}
+                            {chapter.id.startsWith('5') && !isLocked && (
+                                <div className="mt-2 text-[10px] text-fuchsia-400 border border-fuchsia-500/30 bg-fuchsia-900/20 px-2 py-1 rounded inline-block animate-pulse font-mono tracking-widest">
+                                    ⚠️ EXPERIMENTAL
+                                </div>
+                            )}
                         </button>
                     </div >
                 );

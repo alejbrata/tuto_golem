@@ -1,7 +1,7 @@
 import { decodeDNA } from '../engine/golemGen';
 
 function Golem({ dna, stage = 0, className = "" }) {
-    const { bodyType, coreType, eyeType, limbType, color } = decodeDNA(dna);
+    const { bodyType, color } = decodeDNA(dna);
 
     // -- VISUAL LOGIC --
     // Stage 0: Dormant (Gray, Static)

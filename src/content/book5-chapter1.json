@@ -1,0 +1,30 @@
+{
+    "id": "5-1",
+    "title": "El Enlace de Datos (MCP)",
+    "es": {
+        "title": "El Enlace de Datos (MCP)",
+        "lore": "Tu Golem ha crecido, pero sus muros aún son estrechos. Para ser un verdadero Agente, debe aprender a escuchar los susurros de los 'Servidores de Contexto'. El protocolo MCP es el puente hacia la realidad exterior.",
+        "lesson": "Implementa un cliente MCP básico en Python que simule la conexión a un servidor de archivos local para leer una lista de facturas pendientes.",
+        "hints": [
+            "Usa la librería (simulada) mcp_client",
+            "El comando clave es connect_to_server()"
+        ],
+        "initialCode": "import mcp_mock as mcp\n\n# La función debe llamarse conectar_nexo() o connect_nexus()\ndef conectar_nexo():\n    # Usa mcp.connect_to_server('gastos_v1')\n    # Retorna lo que devuelva el método read_files()\n    pass",
+        "solutionCode": "import mcp_mock as mcp\n\ndef conectar_nexo():\n    servidor = mcp.connect_to_server('gastos_v1')\n    return servidor.read_files()",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'conectar_nexo' in globals_dict:\n        return [True, '¡Enlace establecido! El Golem ahora escucha al servidor externo.']\n    return [False, 'El enlace falló. Asegúrate de declarar la función.']"
+    },
+    "en": {
+        "title": "The Data Link (MCP)",
+        "lore": "Your Golem has grown, but its walls are still narrow. To be a true Agent, it must learn to listen to the whispers of 'Context Servers'. The MCP protocol is the bridge to outer reality.",
+        "lesson": "Implement a basic MCP client in Python that simulates connecting to a local file server to read a list of pending invoices.",
+        "hints": [
+            "Use the (mocked) mcp_client library",
+            "The key command is connect_to_server()"
+        ],
+        "initialCode": "import mcp_mock as mcp\n\n# The function must be named connect_nexus() or conectar_nexo()\ndef connect_nexus():\n    # Connect to server 'expenses_v1' using mcp.connect_to_server()\n    # Return the result of the read_files() method\n    pass",
+        "solutionCode": "import mcp_mock as mcp\n\ndef connect_nexus():\n    server = mcp.connect_to_server('expenses_v1')\n    return server.read_files()",
+        "validationCode": "def validar_mision(globals_dict):\n    if 'connect_nexus' in globals_dict:\n        return [True, 'Link established! The Golem now listens to the external server.']\n    return [False, 'The link failed. Check the connection function.']"
+    },
+    "solutionCode": "import mcp_mock as mcp\n\n# Función puente bilingüe para pasar el test directamente\ndef conectar_nexo():\n    server = mcp.connect_to_server('expenses_v1')\n    return server.read_files()\n    \ndef connect_nexus():\n    return conectar_nexo()",
+    "validationCode": "\ndef validar_mision(globals_dict):\n    func = globals_dict.get('conectar_nexo') or globals_dict.get('connect_nexus')\n    if func:\n        try:\n            res = func()\n            if res: return [True, 'Link established!']\n        except: pass\n    return [False, 'Link failed.']\n"
+}
